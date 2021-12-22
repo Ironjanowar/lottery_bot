@@ -109,7 +109,7 @@ defmodule LotteryBot do
   end
 
   defp maybe_translate(0), do: "NO premiado"
-  defp maybe_translate(ok), do: ok
+  defp maybe_translate(ok), do: to_string(ok)
 
   defp winner_from_price(0), do: false
   defp winner_from_price(_), do: true
