@@ -18,6 +18,20 @@ defmodule LotteryBot do
     end
   end
 
+  def remove_number(text) do
+    case Store.delete_number(text) do
+      {:ok, number} ->
+        {"Number #{number.number} removed", []}
+
+      {:error, error} ->
+        {error, []}
+
+      error ->
+        error |> inspect |> Logger.error()
+        {"There was an error", []}
+    end
+  end
+
   def status() do
     case Api.status() do
       {:ok, %{"status" => status}} -> MessageFormatter.format_status(status)

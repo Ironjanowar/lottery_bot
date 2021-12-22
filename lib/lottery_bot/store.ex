@@ -22,6 +22,13 @@ defmodule LotteryBot.Store do
     |> Repo.update()
   end
 
+  def delete_number(number) do
+    case find_numbers(number: number) do
+      [number] -> Repo.delete(number)
+      _ -> {:error, "Could not find number"}
+    end
+  end
+
   ########## Helpers ##########
   defp validate_number(""), do: {:error, "Invalid number"}
 
