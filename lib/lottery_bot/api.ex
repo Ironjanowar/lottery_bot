@@ -12,6 +12,7 @@ defmodule LotteryBot.Api do
   end
 
   def check_number(number) do
+    number = number |> String.to_integer() |> Integer.to_string()
     get!("", query: [n: number]).body |> parse_body()
   end
 

@@ -89,7 +89,7 @@ defmodule LotteryBot do
 
     params = %{price: price, winner: winner, last_checked_at: now()}
 
-    case Store.update_number(number, params) do
+    case maybe_update(number, params) do
       {:ok, number} ->
         number
 
@@ -106,6 +106,12 @@ defmodule LotteryBot do
 
   defp log_error(number, error) do
     Logger.error("Could not update number #{number.number}, error: #{inspect(error)}")
+  end
+
+  defp maybe_update(_number, %{price: ""}), do: {:error, "Error al consultar"}
+
+  defp maybe_update(number, params) do
+    Store.update_number(number, params)
   end
 
   defp maybe_translate(0), do: "NO premiado"
